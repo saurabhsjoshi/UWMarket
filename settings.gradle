@@ -1,1 +1,1 @@
-include ':UWMarket'
+include ':UWMarket', ':facebook'

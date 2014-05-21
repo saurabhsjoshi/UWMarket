@@ -8,12 +8,15 @@ import android.view.MenuItem;
 
 public class Home extends Activity {
 
+    public static int FRAGMENT_MARKET = 0;
+    public static int MY_ITEMS = 1;
+    public static int MY_REQUESTS = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

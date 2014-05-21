@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/UWMarket.iml" filepath="$PROJECT_DIR$/UWMarket.iml" />
       <module fileurl="file://$PROJECT_DIR$/UWMarket/UWMarket-UWMarket.iml" filepath="$PROJECT_DIR$/UWMarket/UWMarket-UWMarket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
     </modules>
   </component>
 </project>

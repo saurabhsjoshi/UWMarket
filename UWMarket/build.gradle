@@ -20,5 +20,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.github.johnkil.android-robototextview:robototextview:2.0.1'
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
     compile 'com.android.support:appcompat-v7:19.+'
+    compile project(':facebook')
 }
