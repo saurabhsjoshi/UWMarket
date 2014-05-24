@@ -51,6 +51,6 @@ public class DrawerListAdapter extends BaseAdapter {
         lbl_drawer.setText(titles[i]);
         img_drawer.setImageResource(img_resources[i]);
 
-        return null;
+        return vi;
     }
 }

@@ -20,7 +20,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.Style1" >
 
         <activity android:name="com.collegecode.barcodescanner.LauncherActivity"/>
         <activity android:name="com.collegecode.barcodescanner.CaptureActivity"
