@@ -1,2 +1,3 @@
 /build
 /src/main/java/com/collegecode/uwmarket/Application.java
+/src/main/java/com/collegecode/api/Secrets.java
