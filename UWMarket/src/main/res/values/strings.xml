@@ -7,6 +7,9 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
+    <!-- Facebook App ID -->
+    <string name="app_id">497906953566757</string>
+
     <!-- Barcode Scanner -->
     <string name="zxinglib_app_name">ZXingLib</string>
     <string name="zxinglib_msg_default_status">Place your friends QR inside the rectangle to scan it.</string>

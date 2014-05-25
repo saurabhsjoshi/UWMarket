@@ -17,10 +17,14 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
+        android:name="com.collegecode.uwmarket.Application"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Style1" >
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>,
+        <activity android:name="com.facebook.LoginActivity"/>
 
         <activity android:name="com.collegecode.barcodescanner.LauncherActivity"/>
         <activity android:name="com.collegecode.barcodescanner.CaptureActivity"
