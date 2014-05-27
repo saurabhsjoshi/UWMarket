@@ -8,29 +8,42 @@ import java.text.ParseException;
  * Created by saurabh on 5/26/14.
  * All objects to be added to parse SHOULD extend this class.
  */
+
 public class Base {
     public String title;
     public String fbId;
     public String objectId;
+    public BASE_TYPE type;
+
+    //Different type of stuff will be added here
+    public enum BASE_TYPE{BOOK, CLICKER};
 
     //Function to set basic items about the item
-
     public void setBase(ParseObject obj) throws ParseException{
         this.title = obj.getString("Name");
         this.objectId = obj.getString("objectId");
         this.fbId = obj.getString("fbId");
     }
 
+    public void setType(BASE_TYPE t){
+        this.type = t;
+    }
+
     //Functions to get basic info about the item
+
+    public void putBase(ParseObject obj){
+        obj.put("title", getTitle());
+        obj.put("fbId", getFbId());
+    }
     public String getTitle(){
-        return title;
+        return this.title;
     }
 
     public String getFbId(){
-        return fbId;
+        return this.fbId;
     }
 
     public String getObjectId(){
-        return objectId;
+        return this.objectId;
     }
 }

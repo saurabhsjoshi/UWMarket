@@ -17,6 +17,7 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Saurabh on 5/25/14.
@@ -34,6 +35,29 @@ public class ImgurApi {
         uploadImage_Async uia = new uploadImage_Async();
         uia.listener = listener;
         uia.execute(location);
+    }
+
+    public String uploadImageinForeGround(String title, String location) throws IOException {
+        File file = new File(location);
+
+        String url = "https://api.imgur.com/3/image";
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpContext localContext = new BasicHttpContext();
+        HttpPost httpPost = new HttpPost(url);
+
+
+        httpPost.setHeader("Authorization", "Client-ID " + Secrets.IMGUR_APP_ID);
+
+        final MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+        entity.addPart("type", new StringBody("file"));
+        //For testing
+        entity.addPart("title", new StringBody(title));
+        entity.addPart("image", new FileBody(file));
+
+        httpPost.setEntity(entity);
+
+        final HttpResponse response = httpClient.execute(httpPost,localContext);
+        return  EntityUtils.toString(response.getEntity());
     }
 
     private class uploadImage_Async extends AsyncTask<String, Void, Void>{
