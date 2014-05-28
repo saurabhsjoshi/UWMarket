@@ -1,6 +1,7 @@
 package com.collegecode.objects;
 
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.text.ParseException;
 
@@ -12,6 +13,8 @@ public class Book extends Base {
     public String price;
     public String author;
     public String img_url;
+    public String condition;
+    public String description;
     public boolean isUploaded = false;
 
     //Make sure you know this is a book
@@ -28,6 +31,8 @@ public class Book extends Base {
         t.author = obj.getString("author");
         t.price = obj.getString("price");
         t.img_url = obj.getString("obj_url");
+        t.description = obj.getString("description");
+        t.condition = obj.getString("condition");
         return t;
     }
 
@@ -35,6 +40,9 @@ public class Book extends Base {
     public static ParseObject getParseObjfromBook(Book b){
         ParseObject obj = new ParseObject("Books");
         b.putBase(obj);
+        obj.put("fbId", ParseUser.getCurrentUser().get("fbId"));
+        obj.put("description", b.description);
+        obj.put("condition", b.condition);
         obj.put("isbn", b.isbn);
         obj.put("author", b.author);
         obj.put("price", b.price);
