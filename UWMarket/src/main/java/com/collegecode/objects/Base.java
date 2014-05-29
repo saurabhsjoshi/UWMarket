@@ -13,6 +13,9 @@ public class Base {
     public String title;
     public String fbId;
     public String objectId;
+    public String price;
+
+    public boolean isUploaded = false;
     public BASE_TYPE type;
 
     //Different type of stuff will be added here
@@ -23,6 +26,7 @@ public class Base {
         this.title = obj.getString("Name");
         this.objectId = obj.getString("objectId");
         this.fbId = obj.getString("fbId");
+        this.price = obj.getString("price");
     }
 
     public void setType(BASE_TYPE t){
@@ -34,6 +38,7 @@ public class Base {
     public void putBase(ParseObject obj){
         obj.put("title", getTitle());
         obj.put("fbId", getFbId());
+        obj.put("price", getPrice());
     }
     public String getTitle(){
         return this.title;
@@ -42,6 +47,8 @@ public class Base {
     public String getFbId(){
         return this.fbId;
     }
+
+    public String getPrice(){return this.price;}
 
     public String getObjectId(){
         return this.objectId;

@@ -10,12 +10,11 @@ import java.text.ParseException;
  */
 public class Book extends Base {
     public String isbn;
-    public String price;
     public String author;
     public String img_url;
     public String condition;
     public String description;
-    public boolean isUploaded = false;
+    public String category;
 
     //Make sure you know this is a book
     public Book(){
@@ -29,10 +28,10 @@ public class Book extends Base {
         t.setType(BASE_TYPE.BOOK);
         t.isbn = obj.getString("isbn");
         t.author = obj.getString("author");
-        t.price = obj.getString("price");
         t.img_url = obj.getString("obj_url");
         t.description = obj.getString("description");
         t.condition = obj.getString("condition");
+        t.category = obj.getString("category");
         return t;
     }
 
@@ -47,6 +46,7 @@ public class Book extends Base {
         obj.put("author", b.author);
         obj.put("price", b.price);
         obj.put("img_url", b.img_url);
+        obj.put("category", b.category);
         return obj;
     }
 

@@ -3,7 +3,7 @@
 
     <!-- In App usage -->
     <string name="app_name">UWMarket</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_add">SELL</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
@@ -12,12 +12,38 @@
 
     <!-- Barcode Scanner -->
     <string name="zxinglib_app_name">ZXingLib</string>
-    <string name="zxinglib_msg_default_status">Place your friends QR inside the rectangle to scan it.</string>
+    <string name="zxinglib_msg_default_status">Place the barcode in the rectangle.</string>
     <string name="scan">Scan</string>
     <string name="scan_resut_lable">Scan Result:</string>
 
     <!--Add Book Fragment -->
     <string name="lbl_book_title">Book title</string>
+    <string name="lbl_book_author">Author</string>
+    <string name="lbl_book_isbn">ISBN</string>
+    <string name="btn_book_scan">Scan</string>
+    <string name="lbl_book_price">Price (CAD)</string>
+    <string name="lbl_book_condition">Condition of the book</string>
+    <string name="lbl_book_category">Subject Category</string>
+    <string name="lbl_book_image">Add Image of the book</string>
+    <string-array name="array_book_category">
+        <item>Other</item>
+        <item>Science</item>
+        <item>Law</item>
+        <item>Engineering</item>
+        <item>Business</item>
+        <item>Medical</item>
+        <item>Arts</item>
+        <item>Mathematics</item>
+    </string-array>
+
+    <!-- Item condition -->
+    <string-array name="array_condition">
+        <item>Mint</item>
+        <item>Excellent</item>
+        <item>Good</item>
+        <item>Fair</item>
+    </string-array>
+
 
     <!--Main Drawer-->
     <string-array name="DrawerTitles">

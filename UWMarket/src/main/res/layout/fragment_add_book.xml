@@ -2,21 +2,153 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:scrollbars="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <com.devspark.robototextview.widget.RobotoEditText
-            android:layout_width="wrap_content"
+            android:id="@+id/txt_title"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/lbl_book_title"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="25dp"
             app:typeface="roboto_light"/>
 
         <com.devspark.robototextview.widget.RobotoEditText
+            android:id="@+id/txt_author"
+            android:layout_below="@id/txt_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/lbl_book_author"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            app:typeface="roboto_light"
+            />
+
+        <com.devspark.robototextview.widget.RobotoButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/btn_scan"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/btn_book_scan"
+            android:layout_below="@id/txt_author"
+            app:typeface="roboto_black"
+            />
+
+        <com.devspark.robototextview.widget.RobotoEditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_author"
+            android:id="@+id/txt_isbn"
+            android:layout_toLeftOf="@id/btn_scan"
+            android:hint="@string/lbl_book_isbn"
+            android:layout_marginLeft="10dp"
+            android:layout_alignBaseline="@id/btn_scan"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="15dp"
+            app:typeface="roboto_light"
+            />
+
+        <com.devspark.robototextview.widget.RobotoEditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_price"
+            android:hint="@string/lbl_book_price"
+            android:layout_below="@id/btn_scan"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            app:typeface="roboto_light"
+            />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_spn_condition"
+            android:text="@string/lbl_book_condition"
+            android:textSize="17sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/txt_price"
+            app:typeface="roboto_light"
+            />
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spn_condition"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="3dp"
+            android:layout_below="@id/lbl_spn_condition"
+            />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_spn_category"
+            android:text="@string/lbl_book_category"
+            android:textSize="17sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/spn_condition"
+            app:typeface="roboto_light"
+            />
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spn_category"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="3dp"
+            android:layout_below="@id/lbl_spn_category"
+            />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_image"
+            android:text="@string/lbl_book_image"
+            android:textSize="17sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/spn_category"
+            app:typeface="roboto_light"
+            />
+
+        <com.devspark.robototextview.widget.RobotoButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_image"
+            android:id="@+id/btn_img"
+            android:text="+"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            />
+
+        <ImageView
+            android:id="@+id/img_book"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="3dp"
+            android:contentDescription="@string/lbl_book_image"
+            android:layout_below="@id/btn_img"
+            android:src="@drawable/book_single"
             />
         </RelativeLayout>
 

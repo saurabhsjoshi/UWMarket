@@ -1,7 +1,9 @@
 package com.collegecode.uwmarket;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -10,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +20,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.collegecode.adapters.DrawerListAdapter;
+import com.collegecode.barcodescanner.IntentIntegrator;
+import com.collegecode.barcodescanner.IntentResult;
+import com.collegecode.fragments.Market;
+import com.collegecode.fragments.additem.AddBookFragment;
 
 
 public class Home extends ActionBarActivity {
@@ -24,6 +31,8 @@ public class Home extends ActionBarActivity {
     public static int FRAGMENT_MARKET = 0;
     public static int MY_ITEMS = 1;
     public static int MY_REQUESTS = 2;
+    public static int FRAGMENT_ADD_BOOK = 3;
+
 
     private String[] titles;
     private int[] imgs;
@@ -107,6 +116,19 @@ public class Home extends ActionBarActivity {
     public void selectItem_Async(int position) {
         Fragment fragment;
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        switch (position){
+            case (3):
+                fragment = new AddBookFragment();
+                break;
+            default:
+                fragment = new Market();
+                break;
+        }
+
+        ft.replace(R.id.content_frame, fragment);
+        ft.commitAllowingStateLoss();
+
     }
 
     @Override
@@ -138,7 +160,8 @@ public class Home extends ActionBarActivity {
         }
 
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add) {
+            selectItem(FRAGMENT_ADD_BOOK);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -146,7 +169,76 @@ public class Home extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Handler handler = new Handler();
+        switch (requestCode) {
+            case IntentIntegrator.REQUEST_CODE:
+                Log.i("BARCODE", "GOT IT!");
+                IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode,
+                        resultCode, data);
+                if (scanResult == null) {
+                    return;
+                }
+                final String result = scanResult.getContents();
+                if (result != null) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            AddBookFragment nb = (AddBookFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
+                            nb.txt_isbn.setText(result);
+                        }
+                    });
+                }
+                break;
+
+            case 214:
+                AddBookFragment nb = (AddBookFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
+                if(resultCode == RESULT_OK)
+                {
+                    if(requestCode == 214)
+                    {
+                        final boolean isCamera;
+                        if(data == null)
+                        {
+                            isCamera = true;
+                        }
+                        else
+                        {
+                            final String action = data.getAction();
+                            if(action == null)
+                            {
+                                isCamera = false;
+                            }
+                            else
+                            {
+                                isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                            }
+                        }
+
+                        Uri selectedImageUri;
+                        if(isCamera)
+                        {
+
+                            selectedImageUri = nb.outputFileUri;
+                        }
+                        else
+                        {
+                            selectedImageUri = data == null ? null : data.getData();
+                        }
+                        nb.final_path = selectedImageUri;
+                        nb.img.setImageBitmap(nb.decodeSampledBitmapFromResource(selectedImageUri, 128, 128));
+                        nb.btn_img.setText(" ↻ ");
+                    }
+                }break;
+
+        }
+    }
+
 }

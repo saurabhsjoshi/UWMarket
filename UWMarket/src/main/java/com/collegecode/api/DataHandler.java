@@ -36,7 +36,7 @@ public class DataHandler extends SQLiteOpenHelper {
 
         String CREATE_BOOKS_TABLE = "CREATE TABLE " + TABLE_BOOKS + "("
                 + "objectid" + " TEXT PRIMARY KEY," + "title" + " TEXT,"
-                + "author" + " TEXT,"
+                + "author" + " TEXT, category TEXT,"
                 + "isbn TEXT, price TEXT, fbid TEXT, condition TEXT, description TEXT, uploaded TEXT)";
 
         String CREATE_CLICKER_TABLE = "CREATE TABLE " + TABLE_CLICKER + "("
