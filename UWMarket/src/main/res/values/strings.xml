@@ -16,6 +16,9 @@
     <string name="scan">Scan</string>
     <string name="scan_resut_lable">Scan Result:</string>
 
+    <!--Add Book Fragment -->
+    <string name="lbl_book_title">Book title</string>
+
     <!--Main Drawer-->
     <string-array name="DrawerTitles">
         <item>Market</item>
