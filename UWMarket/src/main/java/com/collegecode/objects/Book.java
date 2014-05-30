@@ -1,7 +1,6 @@
 package com.collegecode.objects;
 
 import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 import java.text.ParseException;
 
@@ -39,7 +38,8 @@ public class Book extends Base {
     public static ParseObject getParseObjfromBook(Book b){
         ParseObject obj = new ParseObject("Books");
         b.putBase(obj);
-        obj.put("fbId", ParseUser.getCurrentUser().get("fbId"));
+        //obj.put("fbId", ParseUser.getCurrentUser().get("fbId"));
+        obj.put("fbId", "tempfbId");
         obj.put("description", b.description);
         obj.put("condition", b.condition);
         obj.put("isbn", b.isbn);

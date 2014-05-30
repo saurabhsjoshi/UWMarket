@@ -7,6 +7,11 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
+    <!-- Menu Items -->
+    <string name="action_upload">Publish</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_save_for_later">Save Draft</string>
+
     <!-- Facebook App ID -->
     <string name="app_id">497906953566757</string>
 
@@ -25,6 +30,7 @@
     <string name="lbl_book_condition">Condition of the book</string>
     <string name="lbl_book_category">Subject Category</string>
     <string name="lbl_book_image">Add Image of the book</string>
+    <string name="lbl_book_description">Description\n</string>
     <string-array name="array_book_category">
         <item>Other</item>
         <item>Science</item>

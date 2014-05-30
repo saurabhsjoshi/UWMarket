@@ -115,6 +115,20 @@
             android:layout_below="@id/lbl_spn_category"
             />
 
+        <com.devspark.robototextview.widget.RobotoEditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_description"
+            android:maxLength="120"
+            android:hint="@string/lbl_book_description"
+            android:layout_below="@id/spn_category"
+            android:singleLine="false"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            app:typeface="roboto_light"
+            />
+
         <com.devspark.robototextview.widget.RobotoTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -124,7 +138,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:layout_below="@id/spn_category"
+            android:layout_below="@id/txt_description"
             app:typeface="roboto_light"
             />
 

@@ -14,6 +14,9 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -21,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.collegecode.uwmarket.Home;
 import com.collegecode.uwmarket.R;
 
 import java.io.File;
@@ -30,6 +34,7 @@ import java.util.List;
 
 /**
  * Created by saurabh on 5/28/14.
+ * Fragment to publish a clicker on Market
  */
 public class AddClickerFragment extends Fragment {
 
@@ -147,6 +152,25 @@ public class AddClickerFragment extends Fragment {
         }
         return null;
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_upload, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                return true;
+            case R.id.action_cancel:
+                ((Home) getActivity()).selectItem_Async(Home.FRAGMENT_MARKET);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

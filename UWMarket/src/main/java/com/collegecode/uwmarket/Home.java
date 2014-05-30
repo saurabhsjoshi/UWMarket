@@ -272,7 +272,6 @@ public class Home extends ActionBarActivity {
                     ac.img.setImageBitmap(ac.decodeSampledBitmapFromResource(selectedImageUri, 128, 128));
                     ac.btn_img.setText(" ↻ ");
                 }break;
-
         }
     }
 
