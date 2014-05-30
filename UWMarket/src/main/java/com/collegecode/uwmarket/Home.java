@@ -24,6 +24,7 @@ import com.collegecode.barcodescanner.IntentIntegrator;
 import com.collegecode.barcodescanner.IntentResult;
 import com.collegecode.fragments.Market;
 import com.collegecode.fragments.additem.AddBookFragment;
+import com.collegecode.fragments.additem.AddClickerFragment;
 
 
 public class Home extends ActionBarActivity {
@@ -31,8 +32,8 @@ public class Home extends ActionBarActivity {
     public static int FRAGMENT_MARKET = 0;
     public static int MY_ITEMS = 1;
     public static int MY_REQUESTS = 2;
+    public static int ACTIVITY_SETTINGS = 4;
     public static int FRAGMENT_ADD_BOOK = 3;
-
 
     private String[] titles;
     private int[] imgs;
@@ -95,7 +96,7 @@ public class Home extends ActionBarActivity {
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             // Highlight the selected item, update the title, and close the drawer
             mDrawerList.setItemChecked(position, true);
-            if(position != 4)
+            if(position != ACTIVITY_SETTINGS)
                 setTitle(titles[position]);
             mDrawerLayout.closeDrawer(mDrawerList);
             //Use Handler to avoid lag in the transaction
@@ -202,40 +203,74 @@ public class Home extends ActionBarActivity {
                 AddBookFragment nb = (AddBookFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
                 if(resultCode == RESULT_OK)
                 {
-                    if(requestCode == 214)
+                    final boolean isCamera;
+                    if(data == null)
                     {
-                        final boolean isCamera;
-                        if(data == null)
-                        {
-                            isCamera = true;
-                        }
-                        else
-                        {
-                            final String action = data.getAction();
-                            if(action == null)
-                            {
-                                isCamera = false;
-                            }
-                            else
-                            {
-                                isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                            }
-                        }
-
-                        Uri selectedImageUri;
-                        if(isCamera)
-                        {
-
-                            selectedImageUri = nb.outputFileUri;
-                        }
-                        else
-                        {
-                            selectedImageUri = data == null ? null : data.getData();
-                        }
-                        nb.final_path = selectedImageUri;
-                        nb.img.setImageBitmap(nb.decodeSampledBitmapFromResource(selectedImageUri, 128, 128));
-                        nb.btn_img.setText(" ↻ ");
+                        isCamera = true;
                     }
+                    else
+                    {
+                        final String action = data.getAction();
+                        if(action == null)
+                        {
+                            isCamera = false;
+                        }
+                        else
+                        {
+                            isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        }
+                    }
+
+                    Uri selectedImageUri;
+                    if(isCamera)
+                    {
+
+                        selectedImageUri = nb.outputFileUri;
+                    }
+                    else
+                    {
+                        selectedImageUri = data.getData();
+                    }
+                    nb.final_path = selectedImageUri;
+                    nb.img.setImageBitmap(nb.decodeSampledBitmapFromResource(selectedImageUri, 128, 128));
+                    nb.btn_img.setText(" ↻ ");
+                }break;
+
+            case 215:
+                AddClickerFragment ac = (AddClickerFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
+                if(resultCode == RESULT_OK)
+                {
+                    final boolean isCamera;
+                    if(data == null)
+                    {
+                        isCamera = true;
+                    }
+                    else
+                    {
+                        final String action = data.getAction();
+                        if(action == null)
+                        {
+                            isCamera = false;
+                        }
+                        else
+                        {
+                            isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        }
+                    }
+
+                    Uri selectedImageUri;
+                    if(isCamera)
+                    {
+
+                        selectedImageUri = ac.outputFileUri;
+                    }
+                    else
+                    {
+                        selectedImageUri = data.getData();
+                    }
+                    ac.final_path = selectedImageUri;
+                    ac.img.setImageBitmap(ac.decodeSampledBitmapFromResource(selectedImageUri, 128, 128));
+                    ac.btn_img.setText(" ↻ ");
                 }break;
 
         }

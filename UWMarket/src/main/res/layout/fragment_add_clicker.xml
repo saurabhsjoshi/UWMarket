@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.devspark.robototextview.widget.RobotoEditText
+            android:id="@+id/txt_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/lbl_clicker_title"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="25dp"
+            app:typeface="roboto_light"/>
+
+        <com.devspark.robototextview.widget.RobotoEditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_price"
+            android:hint="@string/lbl_book_price"
+            android:layout_below="@id/txt_title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            app:typeface="roboto_light"
+            />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_spn_condition"
+            android:text="@string/lbl_clicker_condition"
+            android:textSize="17sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/txt_price"
+            app:typeface="roboto_light"
+            />
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spn_condition"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="3dp"
+            android:layout_below="@id/lbl_spn_condition"
+            />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_image"
+            android:text="@string/lbl_clicker_image"
+            android:textSize="17sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/spn_condition"
+            app:typeface="roboto_light"
+            />
+
+        <com.devspark.robototextview.widget.RobotoButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_image"
+            android:id="@+id/btn_img"
+            android:text="+"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            />
+
+        <ImageView
+            android:id="@+id/img_book"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="3dp"
+            android:contentDescription="@string/lbl_book_image"
+            android:layout_below="@id/btn_img"
+            />
+    </RelativeLayout>
+
+</ScrollView>

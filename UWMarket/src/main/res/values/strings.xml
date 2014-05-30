@@ -36,6 +36,11 @@
         <item>Mathematics</item>
     </string-array>
 
+    <!-- Add Clicker Fragment -->
+    <string name="lbl_clicker_title">Title</string>
+    <string name="lbl_clicker_condition">Condition of the clicker</string>
+    <string name="lbl_clicker_image">Add Image of the clicker</string>
+
     <!-- Item condition -->
     <string-array name="array_condition">
         <item>Mint</item>
