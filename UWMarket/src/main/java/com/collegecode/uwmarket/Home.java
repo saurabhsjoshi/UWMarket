@@ -25,15 +25,13 @@ import com.collegecode.barcodescanner.IntentResult;
 import com.collegecode.fragments.Market;
 import com.collegecode.fragments.additem.AddBookFragment;
 import com.collegecode.fragments.additem.AddClickerFragment;
+import com.collegecode.fragments.additem.ChooseItemFragment;
 
 
 public class Home extends ActionBarActivity {
 
     public static int FRAGMENT_MARKET = 0;
-    public static int MY_ITEMS = 1;
-    public static int MY_REQUESTS = 2;
     public static int ACTIVITY_SETTINGS = 4;
-    public static int FRAGMENT_ADD_BOOK = 3;
 
     private String[] titles;
     private int[] imgs;
@@ -89,6 +87,9 @@ public class Home extends ActionBarActivity {
         //Set listner for actionbar drawer click
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        //Select Market fragment by default
+        selectItem_Async(FRAGMENT_MARKET);
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -119,8 +120,8 @@ public class Home extends ActionBarActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         switch (position){
-            case (3):
-                fragment = new AddBookFragment();
+            case (5):
+                fragment = new ChooseItemFragment();
                 break;
             default:
                 fragment = new Market();
@@ -131,6 +132,14 @@ public class Home extends ActionBarActivity {
         ft.commitAllowingStateLoss();
 
     }
+
+    public void changeFragmentwithAnim(Fragment fragment, int in, int out){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(in, out);
+        ft.replace(R.id.content_frame, fragment);
+        ft.commitAllowingStateLoss();
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -156,21 +165,15 @@ public class Home extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
-        }
 
-        int id = item.getItemId();
-        if (id == R.id.action_add) {
-            selectItem(FRAGMENT_ADD_BOOK);
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        //getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 
@@ -272,7 +275,6 @@ public class Home extends ActionBarActivity {
                     ac.img.setImageBitmap(ac.decodeSampledBitmapFromResource(selectedImageUri, 128, 128));
                     ac.btn_img.setText(" ↻ ");
                 }break;
-
         }
     }
 

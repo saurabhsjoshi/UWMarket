@@ -1,7 +1,6 @@
 package com.collegecode.api;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.parse.entity.mime.HttpMultipartMode;
 import com.parse.entity.mime.MultipartEntity;
@@ -15,9 +14,17 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Created by Saurabh on 5/25/14.
@@ -31,70 +38,54 @@ public class ImgurApi {
         this.context = context;
     }
 
-    public void uploadImage(String title, String location, OnImgurComplete listener){
-        uploadImage_Async uia = new uploadImage_Async();
-        uia.listener = listener;
-        uia.execute(location);
-    }
+    private boolean copyFile(File src,File dst)throws IOException{
+        if(src.getAbsolutePath().equals(dst.getAbsolutePath())){
+            return true;
 
-    public String uploadImageinForeGround(String title, String location) throws IOException {
-        File file = new File(location);
-
-        String url = "https://api.imgur.com/3/image";
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpContext localContext = new BasicHttpContext();
-        HttpPost httpPost = new HttpPost(url);
-
-
-        httpPost.setHeader("Authorization", "Client-ID " + Secrets.IMGUR_APP_ID);
-
-        final MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-        entity.addPart("type", new StringBody("file"));
-        //For testing
-        entity.addPart("title", new StringBody(title));
-        entity.addPart("image", new FileBody(file));
-
-        httpPost.setEntity(entity);
-
-        final HttpResponse response = httpClient.execute(httpPost,localContext);
-        return  EntityUtils.toString(response.getEntity());
-    }
-
-    private class uploadImage_Async extends AsyncTask<String, Void, Void>{
-        public OnImgurComplete listener;
-        private Exception e = null;
-        @Override
-        protected Void doInBackground(String... strings) {
-            try
-            {
-                File file = new File(strings[0]);
-
-                String url = "https://api.imgur.com/3/image";
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpContext localContext = new BasicHttpContext();
-                HttpPost httpPost = new HttpPost(url);
-
-
-                httpPost.setHeader("Authorization", "Client-ID " + Secrets.IMGUR_APP_ID);
-
-                final MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-                entity.addPart("type", new StringBody("file"));
-                //For testing
-                entity.addPart("title", new StringBody("Pasta!"));
-                entity.addPart("image", new FileBody(file));
-
-                httpPost.setEntity(entity);
-
-                final HttpResponse response = httpClient.execute(httpPost,localContext);
-                final String response_string = EntityUtils.toString(response.getEntity());
-
-                System.out.println("DID IT? " + response_string);
-            }catch (Exception e){
-                e.printStackTrace();
+        }else{
+            InputStream is=new FileInputStream(src);
+            OutputStream os=new FileOutputStream(dst);
+            byte[] buff=new byte[1024];
+            int len;
+            while((len=is.read(buff))>0){
+                os.write(buff,0,len);
             }
-            return null;
+            is.close();
+            os.close();
         }
-        protected void onPostExecute(Void voids){listener.OnTaskComplete(e, "done");}
+        return true;
     }
 
+    public String uploadImageinForeground(String title, String location) throws IOException, JSONException, URISyntaxException {
+        if(location == null)
+            return "";
+
+        File file = new File(context.getFilesDir() + "/" + title);
+        File file2 = new File(new URI(location));
+
+        if(copyFile(file2, file)){
+            String url = "https://api.imgur.com/3/image";
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpContext localContext = new BasicHttpContext();
+            HttpPost httpPost = new HttpPost(url);
+
+            httpPost.setHeader("Authorization", "Client-ID " + Secrets.IMGUR_APP_ID);
+
+            final MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+            entity.addPart("type", new StringBody("file"));
+            entity.addPart("title", new StringBody(title));
+            entity.addPart("image", new FileBody(file));
+
+            httpPost.setEntity(entity);
+
+            final HttpResponse response = httpClient.execute(httpPost,localContext);
+
+            JSONObject res = new JSONObject(EntityUtils.toString(response.getEntity()));
+
+            res = res.getJSONObject("data");
+
+            return res.getString("link");
+        }
+        else {return  "";}
+    }
 }

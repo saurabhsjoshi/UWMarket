@@ -14,6 +14,9 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -21,6 +24,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.collegecode.fragments.Market;
+import com.collegecode.uwmarket.Home;
 import com.collegecode.uwmarket.R;
 
 import java.io.File;
@@ -30,6 +35,7 @@ import java.util.List;
 
 /**
  * Created by saurabh on 5/28/14.
+ * Fragment to publish a clicker on Market
  */
 public class AddClickerFragment extends Fragment {
 
@@ -39,17 +45,23 @@ public class AddClickerFragment extends Fragment {
     ArrayAdapter<CharSequence> adapter_condition;
     public Button btn_img;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState ){
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_clicker,container, false);
-
+        getActivity().setTitle("Enter Details");
         spn_condition = (Spinner) view.findViewById(R.id.spn_condition);
         adapter_condition = ArrayAdapter.createFromResource(getActivity(), R.array.array_condition, android.R.layout.simple_spinner_item);
         adapter_condition.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_condition.setAdapter(adapter_condition);
-
+        btn_img = (Button) view.findViewById(R.id.btn_img);
         img = (ImageView) view.findViewById(R.id.img_book);
 
         (btn_img).setOnClickListener(new View.OnClickListener() {
@@ -147,6 +159,26 @@ public class AddClickerFragment extends Fragment {
         }
         return null;
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_upload, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_sell:
+                return true;
+            case R.id.action_cancel:
+                getActivity().setTitle("Market");
+                ((Home) getActivity()).changeFragmentwithAnim(new Market(), R.anim.slide_in,R.anim.slide_out);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

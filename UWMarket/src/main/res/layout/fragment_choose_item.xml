@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/spn_ch_item"
+        />
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/spn_ch_item"
+        android:text="@string/lbl_chosse_item"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        app:typeface="roboto_black"
+        />
+
+    <com.devspark.robototextview.widget.RobotoButton
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:typeface="roboto_light"
+        android:layout_marginBottom="38dp"
+        android:background="@drawable/round_shape_blue"
+        android:padding="10dp"
+        android:text="@string/btn_next"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

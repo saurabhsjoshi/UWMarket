@@ -14,6 +14,9 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -22,8 +25,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.collegecode.api.AppNotifier;
+import com.collegecode.api.OnParseComplete;
+import com.collegecode.api.ParseAPI;
 import com.collegecode.barcodescanner.IntentIntegrator;
 import com.collegecode.barcodescanner.ZXingLibConfig;
+import com.collegecode.fragments.Market;
+import com.collegecode.objects.Book;
+import com.collegecode.uwmarket.Home;
 import com.collegecode.uwmarket.R;
 
 import java.io.File;
@@ -33,13 +42,17 @@ import java.util.List;
 
 /**
  * Created by saurabh on 5/28/14.
+ * Fragment to publish book on market
  */
 public class AddBookFragment extends Fragment {
 
     ArrayAdapter<CharSequence> adapter_condition;
     ArrayAdapter<CharSequence> adapter_category;
 
+    public View view;
+
     public ImageView img;
+
     public TextView txt_isbn;
 
     public Button btn_img;
@@ -58,8 +71,8 @@ public class AddBookFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_book,container, false);
-
+        view = inflater.inflate(R.layout.fragment_add_book,container, false);
+        getActivity().setTitle("Enter Details");
         zxingLibConfig = new ZXingLibConfig();
         zxingLibConfig.useFrontLight = true;
 
@@ -95,8 +108,8 @@ public class AddBookFragment extends Fragment {
         return view;
     }
 
-    public Uri outputFileUri;
-    public Uri final_path;
+    public Uri outputFileUri = null;
+    public Uri final_path = null;
 
     private void openImageIntent() {
         // Determine Uri of camera image to save.
@@ -180,6 +193,70 @@ public class AddBookFragment extends Fragment {
         }
         return null;
 
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.fragment_upload, menu);
+    }
+
+    public Book getBook(){
+        //Create book from info
+        Book b = new Book();
+        b.title = getTextfromId(R.id.txt_title);
+        b.author = getTextfromId(R.id.txt_author);
+        b.price = getTextfromId(R.id.txt_price);
+        b.isbn = getTextfromId(R.id.txt_isbn);
+        b.description = getTextfromId(R.id.txt_description);
+        b.category = adapter_category.getItem(spn_category.getSelectedItemPosition()).toString();
+        b.condition = adapter_condition.getItem(spn_condition.getSelectedItemPosition()).toString();
+        if(final_path != null)
+            b.img_url = final_path.toString();
+        else
+            b.img_url = null;
+
+        b.fbId = "temp";
+        return b;
+    }
+
+    public String getTextfromId(int id){
+        try {
+            return ((TextView) view.findViewById(id)).getText().toString();
+        }catch (Exception ignore){return "";}
+    }
+
+    public void publishBook(){
+        final AppNotifier an = new AppNotifier(getActivity());
+        an.showNotification("UWMarket", "Publishing book to market..", R.drawable.ic_action_upload);
+        ParseAPI api = new ParseAPI(getActivity());
+
+        api.uploadBook(getBook(), new OnParseComplete() {
+            @Override
+            public void OnTaskComplete(Exception e, Object Result) {
+                if(e == null)
+                    an.removeNotification("Book has been published to market!");
+                else
+                    an.removeNotification("Error publishing book! Draft saved.");
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_upload:
+                publishBook();
+                return true;
+            case R.id.action_cancel:
+                getActivity().setTitle("Market");
+                ((Home) getActivity()).changeFragmentwithAnim(new Market(), R.anim.slide_in,R.anim.slide_out);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }
