@@ -78,7 +78,9 @@ public class ParseAPI {
             b = clickers[0];
             try{
                 ImgurApi imgur = new ImgurApi(context);
-                String res = imgur.uploadImageinForeground(b.title, b.img_url);
+                String s = Long.toString(System.currentTimeMillis());
+                b.objectId = s;
+                String res = imgur.uploadImageinForeground(b.objectId, b.img_url);
 
                 if(!res.equals("error")){
                     b.img_url = res;
@@ -88,7 +90,7 @@ public class ParseAPI {
                 }
                 else
                     e = new Exception("Oops! Could not upload image. Please try again.");
-            }catch (Exception e1){e1.printStackTrace();}
+            }catch (Exception e1){e1.printStackTrace(); e = e1;}
             return null;
         }
 

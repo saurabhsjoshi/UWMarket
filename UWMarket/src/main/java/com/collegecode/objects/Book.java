@@ -39,7 +39,6 @@ public class Book extends Base {
         ParseObject obj = new ParseObject("Books");
         b.putBase(obj);
         //obj.put("fbId", ParseUser.getCurrentUser().get("fbId"));
-        obj.put("fbId", "tempfbId");
         obj.put("description", b.description);
         obj.put("condition", b.condition);
         obj.put("isbn", b.isbn);

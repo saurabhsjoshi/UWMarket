@@ -37,7 +37,8 @@ public class Base {
 
     public void putBase(ParseObject obj){
         obj.put("title", getTitle());
-        obj.put("fbId", getFbId());
+        //obj.put("fbId", getFbId());
+        obj.put("fbId", "temp");
         obj.put("price", getPrice());
     }
     public String getTitle(){

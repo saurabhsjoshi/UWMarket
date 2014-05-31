@@ -23,8 +23,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.collegecode.api.AppNotifier;
+import com.collegecode.api.OnParseComplete;
+import com.collegecode.api.ParseAPI;
 import com.collegecode.fragments.Market;
+import com.collegecode.objects.Clicker;
 import com.collegecode.uwmarket.Home;
 import com.collegecode.uwmarket.R;
 
@@ -41,6 +46,8 @@ public class AddClickerFragment extends Fragment {
 
     public ImageView img;
 
+    View view;
+
     Spinner spn_condition;
     ArrayAdapter<CharSequence> adapter_condition;
     public Button btn_img;
@@ -55,7 +62,7 @@ public class AddClickerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_clicker,container, false);
+        view = inflater.inflate(R.layout.fragment_add_clicker,container, false);
         getActivity().setTitle("Enter Details");
         spn_condition = (Spinner) view.findViewById(R.id.spn_condition);
         adapter_condition = ArrayAdapter.createFromResource(getActivity(), R.array.array_condition, android.R.layout.simple_spinner_item);
@@ -161,6 +168,31 @@ public class AddClickerFragment extends Fragment {
 
     }
 
+    private Clicker getClicker(){
+        Clicker c = new Clicker();
+        c.price = ((TextView) view.findViewById(R.id.txt_price)).getText().toString();
+        c.title = ((TextView) view.findViewById(R.id.txt_title)).getText().toString();
+        c.condition = adapter_condition.getItem(spn_condition.getSelectedItemPosition()).toString();
+        c.img_url = final_path.toString();
+        return c;
+    }
+
+    public void publishClicker(){
+        final AppNotifier an = new AppNotifier(getActivity());
+        an.showNotification("UWMarket", "Publishing clicker to market..", R.drawable.ic_action_upload);
+        ParseAPI api = new ParseAPI(getActivity());
+
+        api.uploadClicker(getClicker(), new OnParseComplete() {
+            @Override
+            public void OnTaskComplete(Exception e, Object Result) {
+                if(e == null)
+                    an.removeNotification("Book has been published to market!");
+                else
+                    an.removeNotification("Error publishing book! Draft saved.");
+            }
+        });
+    }
+
     @Override
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
@@ -170,7 +202,10 @@ public class AddClickerFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_sell:
+            case R.id.action_upload:
+                publishClicker();
+                getActivity().setTitle("Market");
+                ((Home) getActivity()).changeFragmentwithAnim(new Market(), R.anim.slide_in,R.anim.slide_out);
                 return true;
             case R.id.action_cancel:
                 getActivity().setTitle("Market");

@@ -249,6 +249,8 @@ public class AddBookFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_upload:
                 publishBook();
+                getActivity().setTitle("Market");
+                ((Home) getActivity()).changeFragmentwithAnim(new Market(), R.anim.slide_in,R.anim.slide_out);
                 return true;
             case R.id.action_cancel:
                 getActivity().setTitle("Market");
